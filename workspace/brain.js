@@ -20,12 +20,6 @@ class wallet {
         return this.head === null;
     }
 
-    insertAtBeginning(amount, category) {
-        const newtransaction = new transaction(amount, category);
-        newtransaction.next = this.head;
-        this.head = newtransaction;
-    }
-
     insertAtEnd(amount, category) {
         const newtransaction = new transaction(amount, category);
         if (this.isEmpty()) {
@@ -100,6 +94,12 @@ let adjust_btn = document.getElementById('adjust_balance')
 
 let balance = document.getElementById('balance')
 
+let delete_transaction = document.getElementsByClassName('dlt_trans')
+delete_transaction.addEventListener('click', function () {
+    let prevSibling = this.previousElementSibling;
+    let id = prevSibling.innerText
+    wallet_1.delete_transaction(id)
+})
 
 
 adjust_btn.addEventListener('click', function () {
@@ -149,9 +149,3 @@ add_btn.addEventListener('click', function () {
     amount_input.value = ''
     category_input.value = ''
 })
-
-let delete_transaction = document.getElementsByClassName('dlt_trans')
-delete_transaction.addEventListener('click', function () {
-    alert("kdxbhedbk")
-})
-
