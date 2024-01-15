@@ -36,26 +36,17 @@ class wallet {
     deletetransaction(key) {
         let current = this.head;
 
-        // If the key is the head
         if (current && current.amount === key) {
             this.head = current.next;
             current = null;
             return;
         }
 
-        // Search for the key to be deleted
         let prev = null;
         while (current && current.amount !== key) {
             prev = current;
             current = current.next;
         }
-
-        // If the key is not present
-        if (!current) {
-            return;
-        }
-
-        // Unlink the node from the linked list
         prev.next = current.next;
         current = null;
     }
