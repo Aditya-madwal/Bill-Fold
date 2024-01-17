@@ -2,22 +2,45 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>billfold</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
 
-    <h1>current balence : <span id="balance"><b>0</b></span></h1>
-    <button id="adjust_balance">adjust balance</button>
+    <!-- <button id="new">new wallet</button>
+
+    <div id="wallets">
+        <button onclick="set_this_wallet()">${new_wallet_name}</button>
+    </div> -->
+
+    <h1>
+        current balance : <span id="balance"><b>0</b></span>
+    </h1>
+
+    <div style=" display: flex;justify-content: center;">
+        <button id="adjust_balance">adjust balance</button>
+    </div>
+
+    <div style="display: flex;justify-content: space-between;">
+        <h2 id="income"
+            style="color: greenyellow;background-color: rgb(122, 122, 122);padding: 10px;border-radius: 10px;"></h2>
+        <h2 id="expense"
+            style="color:rgb(255, 133, 133);background-color: rgb(122, 122, 122);padding: 10px;border-radius: 10px;">
+        </h2>
+    </div>
 
     <label for="amount">amount</label>
-    <input type="number" id="amount_input">
+    <input type="number" id="amount_input" />
 
     <label for="category">category</label>
-    <input type="text" id="category_input">
+    <input type="text" id="category_input" />
 
     <label for="label">label</label>
     <select name="label" id="label_input">
@@ -25,23 +48,13 @@
         <option value="expense">Expense</option>
     </select>
 
-    <button id="add_transaction">add transaction</button>
-
-    <div id="transactions">
-        <div class="transaction">
-            <hr>
-            <!-- <h4>${i}</h4> -->
-            <h3>amount : <span class="amount" onClick="(function(){
-                alert(this.innerText);
-            })();">${current.amount}</span></h3>
-
-            <h3>category : <span class="category">${current.category}</span></h3>
-            <button class="dlt_trans">
-                delete
-                transaction</button>
-        </div>
+    <div style="display: flex;justify-content: center;">
+        <button id="add_transaction">add transaction</button>
     </div>
 
+    <div id="transactions">
+
+    </div>
 </body>
 <script src="brain.js"></script>
 

@@ -1,11 +1,13 @@
 // linked list part :
 
+console.log("beubcuwei")
+
 class transaction {
     constructor(amount, category, label) {
         this.id = getRndInteger(0, 99999);
         this.amount = amount;
         this.category = category;
-        this.label = label
+        this.label = label;
         this.next = null;
     }
 }
@@ -14,14 +16,23 @@ class wallet {
     constructor() {
         this.head = null;
         this.balance = 0;
+        this.income = 0;
+        this.expense = 0;
     }
 
     isEmpty() {
         return this.head === null;
     }
 
-    insertAtEnd(amount, category) {
-        const newtransaction = new transaction(amount, category);
+    insertAtEnd(amount, category, label) {
+        const newtransaction = new transaction(amount, category, label);
+        if (newtransaction.label === 'income') {
+            this.balance += parseInt(newtransaction.amount)
+            this.income += parseInt(newtransaction.amount)
+        } else {
+            this.balance -= parseInt(newtransaction.amount)
+            this.expense += parseInt(newtransaction.amount)
+        }
         if (this.isEmpty()) {
             this.head = newtransaction;
             return;
@@ -30,6 +41,7 @@ class wallet {
         while (lasttransaction.next) {
             lasttransaction = lasttransaction.next;
         }
+
         lasttransaction.next = newtransaction;
     }
 
@@ -61,8 +73,25 @@ class wallet {
     }
 }
 
-let wallet_1 = new wallet();
+// new wallets :
 
+// let wallets = []
+
+// let new_wallet = document.getElementById('new')
+// let wallets_container = document.getElementById('wallets')
+
+// new_wallet.addEventListener('click', function () {
+//     new_wallet_name = prompt("enter a name for the new wallet : ")
+//     // console.log(new_wallet_name)
+//     wallets.push(new_wallet_name)
+//     console.log(wallets)
+
+//     wallets_container.innerHTML += `<button onclick = "">${new_wallet_name}</button>`
+// })
+
+
+
+let wallet_1 = new wallet();
 
 // brain :
 
@@ -76,7 +105,13 @@ function getRndInteger(min, max) {
 //     alert(prevSibling.innerHTML)
 // }
 
+// if (document.getElementById("income").innerText === "") {
+//     document.getElementById("income").style.backgroundColor = null
+// }
 
+// if (document.getElementById("expense").innerText === "") {
+//     document.getElementById("expense").style.backgroundColor = null
+// }
 
 // production :
 
@@ -85,12 +120,12 @@ let adjust_btn = document.getElementById('adjust_balance')
 
 let balance = document.getElementById('balance')
 
-let delete_transaction = document.getElementsByClassName('dlt_trans')
-delete_transaction.addEventListener('click', function () {
-    let prevSibling = this.previousElementSibling;
-    let id = prevSibling.innerText
-    wallet_1.delete_transaction(id)
-})
+// let delete_transaction = document.getElementsByClassName('dlt_trans')
+// delete_transaction.addEventListener('click', function () {
+//     let prevSibling = this.previousElementSibling;
+//     let id = prevSibling.innerText
+//     wallet_1.delete_transaction(id)
+// })
 
 
 adjust_btn.addEventListener('click', function () {
@@ -109,7 +144,13 @@ add_btn.addEventListener('click', function () {
 
 
     wallet_1.insertAtEnd(parseInt(amount_input.value), category_input.value, label_input.value)
-    balance.innerHTML = parseInt(balance.innerText) - amount_input.value
+
+    if (label_input.value === 'income') {
+        balance.innerHTML = parseInt(balance.innerText) + parseInt(amount_input.value)
+    }
+    else {
+        balance.innerHTML = parseInt(balance.innerText) - parseInt(amount_input.value)
+    }
 
     let current = wallet_1.head;
     let transactions = document.getElementById('transactions')
@@ -118,12 +159,12 @@ add_btn.addEventListener('click', function () {
     while (current) {
 
         let transactions = document.getElementById('transactions')
-        transactions.innerHTML += `<div class="transaction">
-        <hr>
+        if (current.label === 'income') {
+            transactions.innerHTML += `<div class="transaction, green">
         <h4>${i}</h4>
-        <h3>amount : <span class="amount">${current.amount}</span></h3>
-        <h3>category : <span class="category">${current.category}</span></h3>
-        <h6>label : ${current.label}</h6>
+        <h3>Amount : <span class="amount">${current.amount}</span></h3>
+        <h3>Description : <span class="category">${current.category}</span></h3>
+        <h6>Label : ${current.label}</h6>
         <button class="dlt_trans" onclick="delete_transaction(){
             console.log("huhuh")
             // let prevSibling = this.previousElementSibling;
@@ -132,6 +173,21 @@ add_btn.addEventListener('click', function () {
         }">delete transaction</button>
         </div>
         `
+        } else {
+            transactions.innerHTML += `<div class="transaction, red">
+        <h4>${i}</h4>
+        <h3>Amount : <span class="amount">${current.amount}</span></h3>
+        <h3>Description : <span class="category">${current.category}</span></h3>
+        <h6>Label : ${current.label}</h6>
+        <button class="dlt_trans" onclick="delete_transaction(){
+            console.log("huhuh")
+            // let prevSibling = this.previousElementSibling;
+            // alert(prevSibling.innerHTML)
+
+        }">delete transaction</button>
+        </div>
+        `
+        }
         // console.log(current.category, "---->", current.amount);
         current = current.next;
         i++;
@@ -139,4 +195,12 @@ add_btn.addEventListener('click', function () {
 
     amount_input.value = ''
     category_input.value = ''
+
+    let totalincome = document.getElementById('income')
+    totalincome.innerText = wallet_1.income
+
+    let totalexpense = document.getElementById('expense')
+    totalexpense.innerText = wallet_1.expense
+
+
 })
