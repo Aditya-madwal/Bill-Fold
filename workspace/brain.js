@@ -202,5 +202,4 @@ add_btn.addEventListener('click', function () {
     let totalexpense = document.getElementById('expense')
     totalexpense.innerText = wallet_1.expense
 
-
 })
